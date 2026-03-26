@@ -18,9 +18,9 @@ class Dataset:
         Initializes the Dataset class by loading and cleaning the data.
         """
         data = load_breast_cancer()
-        self.data, self.target = data.data, data.target
-        self.feature_names = data.feature_names
-        self.target_names = data.target_names
+        self.data, self.target = data.data, data.target # type: ignore[reportAttributeAccessIssue]
+        self.feature_names = data.feature_names # type: ignore[reportAttributeAccessIssue]
+        self.target_names = data.target_names # type: ignore[reportAttributeAccessIssue]
         self.__load_and_clean_data()
 
     def __load_and_clean_data(self):
@@ -61,7 +61,7 @@ class Dataset:
         Splits the dataset into training and testing sets.
         """
         stratify_param = self.target if stratify else None
-        return train_test_split(self.data, self.target, test_size=test_size, stratify=stratify_param, random_state=random_state)
+        return train_test_split(self.data, self.target, test_size=test_size, stratify=stratify_param, random_state=random_state) # type: ignore[reportAttributeAccessIssue]
 
     def scale_data(self, X_train: np.ndarray, X_test: np.ndarray, scale_type: str = 'standard') -> Tuple[np.ndarray, np.ndarray]:
         """
