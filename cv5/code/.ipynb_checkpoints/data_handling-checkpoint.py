@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from sklearn.datasets import load_breast_cancer
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler  # Task 2
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from typing import Tuple, List, Optional, Callable
@@ -18,9 +18,9 @@ class Dataset:
         Initializes the Dataset class by loading and cleaning the data.
         """
         data = load_breast_cancer()
-        self.data, self.target = data.data, data.target # type: ignore[reportAttributeAccessIssue]
-        self.feature_names = data.feature_names # type: ignore[reportAttributeAccessIssue]
-        self.target_names = data.target_names # type: ignore[reportAttributeAccessIssue]
+        self.data, self.target = data.data, data.target
+        self.feature_names = data.feature_names
+        self.target_names = data.target_names
         self.__load_and_clean_data()
 
     def __load_and_clean_data(self):
@@ -61,7 +61,7 @@ class Dataset:
         Splits the dataset into training and testing sets.
         """
         stratify_param = self.target if stratify else None
-        return train_test_split(self.data, self.target, test_size=test_size, stratify=stratify_param, random_state=random_state) # type: ignore[reportAttributeAccessIssue]
+        return train_test_split(self.data, self.target, test_size=test_size, stratify=stratify_param, random_state=random_state)
 
     def scale_data(self, X_train: np.ndarray, X_test: np.ndarray, scale_type: str = 'standard') -> Tuple[np.ndarray, np.ndarray]:
         """
@@ -69,43 +69,12 @@ class Dataset:
         """
         scalers = {
             'standard': StandardScaler(),
-            'normalize': MinMaxScaler(),
-            'robust': RobustScaler() # uloha 2
+            'normalize': MinMaxScaler()
         }
         scaler = scalers.get(scale_type)
         if not scaler:
-            raise ValueError("Invalid scale_type. Choose 'standard', 'normalize', or 'robust'.")
+            raise ValueError("Invalid scale_type. Choose 'standard' or 'normalize'.")
         return scaler.fit_transform(X_train), scaler.transform(X_test)
-
-    # uloha 1
-    def calculate_statistics(self) -> pd.DataFrame:
-        df = pd.DataFrame(self.data, columns=self.feature_names)
-        stats = pd.concat([
-            df.mean().rename('mean'),
-            df.median().rename('median'),
-            df.std().rename('std')
-        ], axis=1)
-        return stats
-
-    # 3 4
-    def summarize_features(self, feature_names: Optional[List[str]] = None) -> pd.DataFrame:
-        """
-        Provides a summary of each feature, including the number of unique values,
-        the most common value, and its frequency.
-        An optional feature_names parameter can be used to summarize only selected features.
-        """
-        df = pd.DataFrame(self.data, columns=self.feature_names)
-        if feature_names is not None:
-            invalid = [f for f in feature_names if f not in df.columns]
-            if invalid:
-                raise ValueError(f"Unknown features: {invalid}")
-            df = df[feature_names]
-        summary = pd.DataFrame({
-            'unique_count': df.nunique(),
-            'most_common': df.apply(lambda col: col.mode().iloc[0]),
-            'frequency': df.apply(lambda col: col.value_counts().iloc[0])
-        })
-        return summary
 
     def visualize_feature_distribution(self, feature_index: int, scaled_data: Optional[np.ndarray] = None, title_suffix: str = ""):
         """
