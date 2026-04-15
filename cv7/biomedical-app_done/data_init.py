@@ -6,7 +6,7 @@ np.random.seed(42)
 patient_ids = [f"Patient {i}" for i in range(1, 11)]
 dates = pd.date_range(start="2023-01-01", periods=12, freq="ME")
 measurements = ["Cholesterol", "Blood Pressure", "Glucose"]
-views = {"graph": "Visualization", "summary": "Statistical Summary", "table": "Patient Data Table"}
+views = {"graph": "Visualization", "summary": "Statistical Summary", "table": "Patient Data Table", "average": "Average"}
 
 # Store each patient's data in a dictionary of DataFrames with realistic ranges
 data = {

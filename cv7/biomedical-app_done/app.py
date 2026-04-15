@@ -46,7 +46,9 @@ def server(input, output, session):
         view_type = input.view_type()
         if view_type == data.views['graph']:
             conditional_ui.set(data.dynamic_ui_elements['graph_type'])
-        elif view_type in [data.views['summary'], data.views['table']]:
+        # fix for not showing average text until summary is clicked
+        # show this later
+        elif view_type in [data.views['summary'], data.views['table'], data.views['average']]:
             conditional_ui.set(data.dynamic_ui_elements['stats'])
         else:
             conditional_ui.set(None)  # Clear the dynamic UI
@@ -97,6 +99,22 @@ def server(input, output, session):
             patient_data_df = patient_data_dict.get()[patient_id]
 
             return utils.generate_statistical_summary(patient_id, stats, patient_data_df)
+
+    @output
+    @render.table
+    def average():
+        input.calculate_avg()
+        if input.view_type() == data.views['average']:
+            patient_data_dict_val = patient_data_dict.get()
+    
+            rows = []
+            for patient_id, df in patient_data_dict_val.items():
+                row = {"Patient": patient_id}
+                for measurement in data.measurements:
+                    row[measurement] = round(df[measurement].mean(), 2)
+                rows.append(row)
+    
+            return pd.DataFrame(rows).set_index("Patient")
 
     @output
     @render.table

@@ -31,6 +31,7 @@ app_ui = ui.page_fluid(
             # Make the slider dynamic by rendering it in the server
             ui.output_ui("dynamic_slider"),
             ui.input_action_button("generate_data", "Generate Data"),
+            ui.input_action_button("calculate_avg", "Calculate Average"),
             ui.input_radio_buttons("view_type", "Choose View",
                                    choices=list(data.views.values()), selected="Visualization"),
             # Dynamic UI element
@@ -38,6 +39,7 @@ app_ui = ui.page_fluid(
         ),
         ui.card(
             ui.output_text("statistical_summary"),
+            ui.output_table("average"),
             ui.output_table("patient_data"),
             ui.output_plot("data_visualization"),
         )
