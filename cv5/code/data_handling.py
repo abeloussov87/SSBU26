@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from sklearn.datasets import load_breast_cancer
+<<<<<<< HEAD
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler  # Task 2
+=======
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from typing import Tuple, List, Optional, Callable
@@ -18,9 +22,15 @@ class Dataset:
         Initializes the Dataset class by loading and cleaning the data.
         """
         data = load_breast_cancer()
+<<<<<<< HEAD
         self.data, self.target = data.data, data.target # type: ignore[reportAttributeAccessIssue]
         self.feature_names = data.feature_names # type: ignore[reportAttributeAccessIssue]
         self.target_names = data.target_names # type: ignore[reportAttributeAccessIssue]
+=======
+        self.data, self.target = data.data, data.target
+        self.feature_names = data.feature_names
+        self.target_names = data.target_names
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229
         self.__load_and_clean_data()
 
     def __load_and_clean_data(self):
@@ -61,7 +71,11 @@ class Dataset:
         Splits the dataset into training and testing sets.
         """
         stratify_param = self.target if stratify else None
+<<<<<<< HEAD
         return train_test_split(self.data, self.target, test_size=test_size, stratify=stratify_param, random_state=random_state) # type: ignore[reportAttributeAccessIssue]
+=======
+        return train_test_split(self.data, self.target, test_size=test_size, stratify=stratify_param, random_state=random_state)
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229
 
     def scale_data(self, X_train: np.ndarray, X_test: np.ndarray, scale_type: str = 'standard') -> Tuple[np.ndarray, np.ndarray]:
         """
@@ -69,6 +83,7 @@ class Dataset:
         """
         scalers = {
             'standard': StandardScaler(),
+<<<<<<< HEAD
             'normalize': MinMaxScaler(),
             'robust': RobustScaler() # uloha 2
         }
@@ -107,6 +122,15 @@ class Dataset:
         })
         return summary
 
+=======
+            'normalize': MinMaxScaler()
+        }
+        scaler = scalers.get(scale_type)
+        if not scaler:
+            raise ValueError("Invalid scale_type. Choose 'standard' or 'normalize'.")
+        return scaler.fit_transform(X_train), scaler.transform(X_test)
+
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229
     def visualize_feature_distribution(self, feature_index: int, scaled_data: Optional[np.ndarray] = None, title_suffix: str = ""):
         """
         Visualizes the distribution of a specific feature before and after scaling using boxplots.

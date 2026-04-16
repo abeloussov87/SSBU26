@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from data_handling import Dataset
+=======
+from data_handling_done import Dataset
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229
 
 if __name__ == "__main__":
     dataset = Dataset()
@@ -20,4 +24,8 @@ if __name__ == "__main__":
 
     # plot pair plot for the first 5 features
     selected_features = dataset.feature_names[:5]
+<<<<<<< HEAD
     dataset.plot_pair_plot(selected_features)
+=======
+    dataset.plot_pair_plot(selected_features)
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229

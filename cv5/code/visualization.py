@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from data_handling import Dataset
+=======
+from data_handling_done import Dataset
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229
 
 if __name__ == "__main__":
     dataset_std = Dataset()
@@ -18,4 +22,8 @@ if __name__ == "__main__":
     X_train_norm, _ = dataset_norm.scale_data(X_train_n, X_test_n, scale_type='normalize')
     dataset_norm.plot_all_features_before_after_scaling(X_train_n, X_train_norm, scale_type='Normalization')
     dataset_norm.plot_feature_before_after_scaling(X_train_n, X_train_norm, feature_name='mean area')
+<<<<<<< HEAD
     dataset_norm.plot_box_plots(scaled_data=X_train_norm, target=y_train_n)
+=======
+    dataset_norm.plot_box_plots(scaled_data=X_train_norm, target=y_train_n)
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229

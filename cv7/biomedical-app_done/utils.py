@@ -61,8 +61,11 @@ def create_plot(patient_id, measurement_type, filtered_data, graph_type):
         ax.plot(filtered_data.index, filtered_data)
     elif graph_type == "Histogram":
         ax.hist(filtered_data, bins=15)
+<<<<<<< HEAD
     elif graph_type == "Box Plot":
         ax.boxplot(filtered_data)
+=======
+>>>>>>> b4a4b43721ab234fb6e60ae5308f0b527c17c229
 
     ax.grid(True, which='both')
     ax.set_title(f"{measurement_type} for {patient_id}")
